@@ -1,0 +1,258 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Blog;
+use App\Models\Blogcat;
+use Illuminate\Http\Request;
+
+class BlogController extends Controller
+{
+    /**
+     * Display a listing of the blogs.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        // Fetch all blogs with their related category
+        $blogs = Blog::with('category')->get();
+
+
+        // Pass blogs to view
+        return view('pages.blogs.index', compact('blogs'));
+    }
+
+
+    /**
+     * Show the form for creating a new blog.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $cats=Blogcat::get();
+        return view('pages.blogs.create',compact('cats'));
+    }
+
+    /**
+     * Store a newly created blog in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+
+        $request->validate([
+            'slug' => 'required|string|max:260',
+            'title' => 'required|string|max:260',
+            'cat_id' => 'required|integer',
+            'thumbnail' => 'required',
+            'desktop_banner' => 'required',
+            'mob_banner' => 'required',
+            'content' => 'required|string',
+            'summary' => 'required|string',
+        ]);
+
+        $blog = Blog::create([
+            'slug' => $request->slug,
+            'title' => $request->title,
+            'cat_id' => $request->cat_id,
+            'thumbnail' => $request->thumbnail,
+            'desktop_banner' => $request->desktop_banner,
+            'mob_banner' => $request->mob_banner,
+            'content' => $request->content,
+            'summary' => $request->summary,
+            'date_created' => $request->date_created,
+        ]);
+
+        return redirect()->route('blogs.index')->with('success', 'Blog created successfully.');
+    }
+
+    /**
+     * Display the specified blog.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $blog = Blog::find($id);
+
+        if (!$blog) {
+            return response()->json(['message' => 'Blog not found'], 404);
+        }
+
+        return response()->json($blog);
+    }
+
+    /**
+     * Show the form for editing the specified blog.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $blog = Blog::find($id);
+        $cats = Blogcat::get();
+
+        if (!$blog) {
+            return response()->json(['message' => 'Blog not found'], 404);
+        }
+
+        // Return view to edit blog (if using web views)
+        return view('pages.blogs.edit', compact('blog','cats'));
+    }
+
+    /**
+     * Update the specified blog in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //dd($request->all());
+        $request->validate([
+            'slug' => 'sometimes|string|max:260|unique:blogs,slug,' . $id,
+            'title' => 'sometimes|string|max:260',
+            'cat_id' => 'sometimes|integer',
+            'thumbnail' => 'sometimes|string',
+            'desktop_banner' => 'sometimes|string',
+            'mob_banner' => 'sometimes|string',
+            'content' => 'sometimes|string',
+            'summary' => 'sometimes|string',
+        ]);
+
+        $blog = Blog::find($id);
+
+        if (!$blog) {
+            return response()->json(['message' => 'Blog not found'], 404);
+        }
+
+        $blog->update($request->only([
+            'slug', 'title', 'cat_id', 'thumbnail', 
+            'desktop_banner', 'mob_banner', 'content', 
+            'summary', 'date_created'
+        ]));
+
+        return redirect()->route('blogs.index')->with('success', 'Blog updated successfully.');
+    }
+
+    /**
+     * Remove the specified blog from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        
+        $blog = Blog::find($id);
+
+        if (!$blog) {
+            return response()->json(['message' => 'Blog not found'], 404);
+        }
+
+        $blog->delete();
+
+        return redirect()->route('blogs.index')->with('success', 'Blog deleted successfully.');
+    }
+ 
+
+
+    //api section
+    public function getAllBlogs()
+    {
+        // Retrieve all blogs from the Blog table
+        $blogs = Blog::all();
+
+        // Prepare the response
+        $response = [
+            'blogs' => $blogs->map(function($blog) {
+
+                return [
+                    'id' => $blog->id,
+                    'slug' => $blog->slug,
+                    'title' => $blog->title,
+                    'cat_id' => $blog->cat_id,
+                    'thumbnail' => $blog->thumbnail,
+                    'desktop_banner' => $blog->desktop_banner,
+                    'mob_banner' => $blog->mob_banner,
+                    'content' => $blog->content,
+                    'summary' => $blog->summary,
+                    'date_created' => $blog->date_created,
+                    'category' =>  'Blog',
+                    'blog_id' => $blog->id, // Assuming 'blog_id' is the same as 'id'
+                    'blog_slug' => $blog->slug, // Assuming 'blog_slug' is the same as 'slug'
+                ];
+            }),
+        ];
+
+        // Return the JSON response
+        return response()->json($response);
+    }
+    public function getBlogBySlug($slug)
+    {
+        try {
+            // Fetch the blog by slug
+            $blog = Blog::where('slug', $slug)->firstOrFail();
+
+            // Fetch the last 5 recent blogs
+            $recentBlogs = Blog::orderBy('date_created', 'desc')->take(5)->get();
+
+            // Prepare the response
+            return response()->json([
+                'status' => 'success',
+                'blog' => [
+                    'id' => $blog->id,
+                    'slug' => 'blog',
+                    'title' => $blog->title,
+                    'cat_id' => $blog->cat_id,
+                    'thumbnail' => $blog->thumbnail,
+                    'desktop_banner' => $blog->desktop_banner,
+                    'mob_banner' => $blog->mob_banner,
+                    'content' => $blog->content,
+                    'summary' => $blog->summary,
+                    'date_created' => $blog->date_created->format('Y-m-d H:i:s'),
+                    'category' => 'Blog', // assuming there's a relationship with the Category model
+                    'blog_id' => $blog->id,
+                    'blog_slug' => $blog->slug,
+                ],
+                'recent' => $recentBlogs->map(function ($recentBlog) {
+                    return [
+                        'id' => $recentBlog->id,
+                        'slug' => 'blog',
+                        'title' => $recentBlog->title,
+                        'cat_id' => $recentBlog->cat_id,
+                        'thumbnail' => $recentBlog->thumbnail,
+                        'desktop_banner' => $recentBlog->desktop_banner,
+                        'mob_banner' => $recentBlog->mob_banner,
+                        'content' => $recentBlog->content,
+                        'summary' => $recentBlog->summary,
+                        'date_created' => $recentBlog->date_created->format('Y-m-d H:i:s'),
+                        'blog_id' => $recentBlog->id,
+                    'blog_slug' => $recentBlog->slug,
+                    ];
+                }),
+            ], 200); // HTTP 200 OK
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Blog not found
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Blog not found',
+            ], 404); // HTTP 404 Not Found
+        } catch (\Exception $e) {
+            // General error
+            return response()->json([
+                'status' => 'error',
+                'message' => 'An unexpected error occurred',
+                'error' => $e->getMessage(),
+            ], 500); // HTTP 500 Internal Server Error
+        }
+    }
+}
