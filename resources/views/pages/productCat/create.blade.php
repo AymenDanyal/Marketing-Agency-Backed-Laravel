@@ -20,10 +20,31 @@
                         <div class="col-sm-12 mb-3">
                             <input class="form-control" name="cat_slug" placeholder="Product Category Slug" required disabled>
                         </div>
+                        <div class="mb-3 col-sm-4">
+                            <label>Category Image</label> 
+                            <input class="form-control" name="mob_banner" required type="file">
+                        </div>
+                        <div class="mb-3 col-sm-12">
+                            <label>Meta Footer</label>
+                            <textarea class="form-control" name="meta_footer"
+                                id="meta_footer"></textarea>
+                        </div>
+
+                        <div class="mb-3 col-sm-12">
+                            <label>Meta Title</label> 
+                            <textarea id="meta_title" name="meta_title"  class="form-control"
+                                placeholder="Meta Title" required></textarea>
+                        </div>
+                        <div class="mb-3 col-sm-12">
+                            <label>Meta Description</label> 
+                            <textarea id="meta_description" name="meta_description" class="form-control"
+                                placeholder="Meta Description" required></textarea>
+                        </div>
                         <div class="col-sm-12 mb-3 customCheckbox" style="display:flex;align-items:center;gap:.5rem">
                             <label style="margin-bottom:0">Is Parent</label>
                             <input class="form-control checkbox" name="is_parent" checked style="width:max-content" type="checkbox">
                         </div>
+                        
                         <div class="col-sm-12 mb-3 form-select" style="display:none" id="sub_cat">
                             <select id="sub_cats" name="parent_id">
                                 @if(!empty($parent_cats))
@@ -77,6 +98,9 @@
                 $('#sub_cat').show();
             }
         });
+        if($("#meta_footer").length > 0){
+            CKEDITOR.replace('meta_footer');
+        }
     });
 </script>
 @endpush

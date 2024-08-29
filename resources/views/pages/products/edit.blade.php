@@ -79,13 +79,15 @@
                                 id="meta_footer">{{$product['meta_footer']}}</textarea>
                         </div>
 
-                        <div class="mb-3 col-sm-6">
-                            <input name="meta_title" value="{{$product['meta_title']}}" class="form-control"
-                                placeholder="Meta Title" required>
+                        <div class="mb-3 col-sm-12">
+                            <label>Meta Title</label> 
+                            <textarea id="meta_title" name="meta_title" class="form-control"
+                                placeholder="Meta Title" required>{{$product['meta_title']}}</textarea>
                         </div>
-                        <div class="mb-3 col-sm-6">
-                            <input name="meta_description" value="{{$product['meta_description']}}" class="form-control"
-                                placeholder="Meta Description" required>
+                        <div class="mb-3 col-sm-12">
+                            <label>Meta Description</label> 
+                            <textarea id="meta_description" name="meta_description" class="form-control"
+                                placeholder="Meta Description" required>{{$product['meta_description']}}</textarea>
                         </div>
 
                         <div class="mb-3 col-sm-12">
@@ -127,6 +129,8 @@
         if($("#meta_footer").length > 0){
             CKEDITOR.replace('meta_footer');
         }
+        
+        
 
         // Slugify product name
         const slugify = str =>

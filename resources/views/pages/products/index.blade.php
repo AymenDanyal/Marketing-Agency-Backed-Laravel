@@ -15,36 +15,35 @@
                         <tr>
                             <th>S.No</th>
                             <th>Name</th>
-                            <th>Slug</th>
+                            <th>Image</th>
                             <th>Category</th>
                             <th>Summary</th>
                             <th>Description</th>
+                            <th>Meta Title</th>
+                            <th>Meta Description</th>
                             <th>Meta Footer</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>S.No</th>
-                            <th>Name</th>
-                            <th>Slug</th>
-                            <th>Category</th>
-                            <th>Summary</th>
-                            <th>Description</th>
-                            <th>Meta Footer</th>
-                            <th>Action</th>
-                        </tr>
-                    </tfoot>
+                    
                     <tbody id="sortable">
                         @foreach($products as $key => $product)
                         <tr data-id="{{ $product->id }}" data-order="{{ $key + 1 }}">
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $product->title }}</td>
-                            <td>{{ $product->slug }}</td>
-                            <td>{{ $product->category->category }}</td>
-                            <td>{{ $product->summary }}</td>
-                            <td>{{ $product->description }}</td>
-                            <td>{{ $product->meta_footer }}</td>
+                            <td>{{ $product->title ?? 'N/A' }}</td>
+                            <td>
+                                @if($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="Thumbnail" width="100">
+                                @else
+                                No Image
+                                @endif
+                            </td>
+                            <td>{{ optional($product->category)->category ?? 'N/A' }}</td>
+                            <td>{{ $product->summary ?? 'N/A' }}</td>
+                            <td>{{ $product->description ?? 'N/A' }}</td>
+                            <td>{{ $product->meta_title ?? 'N/A' }}</td>
+                            <td>{{ $product->meta_description ?? 'N/A' }}</td>
+                            <td>{{ $product->meta_footer ?? 'N/A' }}</td>
                             <td>
                                 <a class="btn btn-success" href="{{ route('products.edit', $product->id) }}">Edit</a>
                                 <form id="delete-form-{{ $product->id }}" action="{{ route('products.delete', $product->id) }}" method="POST" style="display:inline;">
@@ -54,6 +53,7 @@
                                 </form>
                             </td>
                         </tr>
+                        
                         @endforeach
                     </tbody>
                 </table>

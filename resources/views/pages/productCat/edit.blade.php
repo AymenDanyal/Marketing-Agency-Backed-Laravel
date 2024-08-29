@@ -25,9 +25,29 @@
                             <label>Category Slug</label>
                             <input name="cat_slug" class="form-control" placeholder="Product Category Slug" value="{{ $cat->slug }}" required disabled>
                         </div>
+                        <div class="mb-3 col-sm-4">
+                            <label>Category Image</label> 
+                            <input class="form-control" value="{{ $cat->image }}" name="mob_banner" required type="file">
+                        </div>
                         <div class="col-sm-12 mb-3 customCheckbox" style="display:flex;align-items:center;gap:.5rem">
                             <label style="margin-bottom:0">Is Parent</label>
                             <input name="is_parent" class="form-control checkbox" style="width:max-content" type="checkbox" {{ $cat->is_parent == 1 ? 'checked' : '' }}>
+                        </div>
+                        <div class="mb-3 col-sm-12">
+                            <label>Meta Footer</label>
+                            <textarea class="form-control" name="meta_footer"
+                                id="meta_footer">{{ $cat->meta_footer }}</textarea>
+                        </div>
+
+                        <div class="mb-3 col-sm-12">
+                            <label>Meta Title</label> 
+                            <textarea id="meta_title" name="meta_title"  class="form-control"
+                                placeholder="Meta Title" required>{{ $cat->meta_title }}</textarea>
+                        </div>
+                        <div class="mb-3 col-sm-12">
+                            <label>Meta Description</label> 
+                            <textarea id="meta_description" name="meta_description" class="form-control"
+                                placeholder="Meta Description" required>{{ $cat->meta_description }}</textarea>
                         </div>
                         <div class="col-sm-12 mb-3 form-select" style="display:none" id="sub_cat">
                             <select id="sub_cats" name="parent_id">
@@ -74,6 +94,7 @@
         .replace(/[^\w\s-]/g, '')
         .replace(/[\s_-]+/g, '-')
         .replace(/^-+|-+$/g, '');
+    
 
     $('input[name="cat_name"]').keyup(function(event) {
         if ($(this).val().length > 0) {
@@ -93,6 +114,9 @@
         }
     });
 
+    if($("#meta_footer").length > 0){
+        CKEDITOR.replace('meta_footer');
+    }
     // Trigger the change event on page load to ensure the initial state is reflected
     $('input[name="is_parent"]').change();
 </script>

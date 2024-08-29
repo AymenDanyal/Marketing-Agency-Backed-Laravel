@@ -1,5 +1,5 @@
 <ul class="navbar-nav accordion bgside sidebar sidebar-dark" id="accordionSidebar">
-    <a class="d-flex align-items-center justify-content-center sidebar-brand" href="./">
+    <a class="d-flex align-items-center justify-content-center sidebar-brand" href="/">
         <div class="sidebar-brand-icon">
             <img class="logo img-fluid d-block auto p-2 p-md-4" src="{{asset('/logo/avon.png')}}" alt="Avon Logo">
         </div>
@@ -36,9 +36,9 @@
         </div>
     </li>
     <li class="nav-item">
-        {{-- href="{{asset('/contact-queries')}}" --}}
-        <a class="nav-link">
-            <i class="fas fa-phone-square-alt"></i> <span>Contact Queries</span>
+        <a  class="nav-link collapsed"  href="{{ route('contact-queries.index') }}"> 
+            <i class="fas fa-phone-square-alt"></i> 
+            <span>Contact Queries</span>
         </a>
     </li>
     <hr class="d-none d-md-block sidebar-divider">

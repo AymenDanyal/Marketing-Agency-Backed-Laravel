@@ -16,7 +16,6 @@ class ProductController extends Controller
        
         $products = Product::with('category')->get();
         
-      
         return view('pages.products.index',compact('products'));
     }
     
@@ -189,6 +188,11 @@ class ProductController extends Controller
                 'id' => $category->id,
                 'category' => $category->category,
                 'description' => $category->description,
+                'image' => $category->image,
+                'meta_title' => $category->meta_footer,
+                'meta_description' => $category->meta_description,
+                'meta_footer' => $category->meta_footer,
+                'image' => $category->image,
                 'is_parent' => $category->is_parent,
                 'parent_id' => $category->parent_id,
                 'slug' => $category->slug,

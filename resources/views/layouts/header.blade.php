@@ -12,9 +12,12 @@
                     </a>
                     <div class="shadow animated--grow-in dropdown-menu dropdown-menu-right"
                         aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="{{asset('/login/logout')}}">
-                            <i class="fas fa-fw fa-sign-out-alt fa-sm mr-2 text-gray-400"></i> Logout
-                        </a>
+                        <form id="logout-form" action="/logout" method="POST" >
+                            @csrf
+                            <button type="submit" class="dropdown-item">
+                                <i class="fas fa-fw fa-sign-out-alt fa-sm mr-2 text-gray-400"></i> Logvvout
+                            </button>
+                        </form>
                     </div>
                 </li>
             </ul>

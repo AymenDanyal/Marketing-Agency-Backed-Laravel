@@ -66,15 +66,15 @@ class ProductCatController extends Controller
    
     public function edit($id)
     {
-        $product = ProductCat::where('id',$id)->first();
+        $cat = ProductCat::where('id',$id)->first();
         
-        if (!$product) {
+        if (!$cat) {
             return response()->json(['message' => 'Product not found'], 404);
         }
         
-        $cats = ProductCat::get();
+        $parent_cats = ProductCat::whereNotNull('is_parent')->get();
         
-        return view('pages.productCat.edit', compact('product', 'cats'));
+        return view('pages.productCat.edit', compact('cat','parent_cats'));
     }
     
     
@@ -116,6 +116,6 @@ class ProductCatController extends Controller
 
         $product->delete();
 
-        return redirect()->rogdsfgfdute('products.index')->with('success', 'Product delete successfully.');
+        return redirect()->route('products.index')->with('success', 'Product delete successfully.');
     }
 }

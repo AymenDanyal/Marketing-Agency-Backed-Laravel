@@ -55,10 +55,12 @@
                             <label>Meta Footer</label> 
                             <textarea class="form-control" name="meta_footer" required id="meta_footer"></textarea>
                         </div>
-                        <div class="mb-3 col-sm-6">
-                            <input class="form-control" name="meta_title" placeholder="Meta Title" required></div>
-                        <div class="mb-3 col-sm-6">
-                            <input class="form-control" name="meta_description" placeholder="Meta Description" required></div>
+                        <div class="mb-3 col-sm-12">
+                            <label>Meta Title</label> 
+                            <textarea id="meta_title" class="form-control" name="meta_title" placeholder="Meta Title" required></textarea>
+                        <div class="mb-3 col-sm-12">
+                            <label>Meta Description</label> 
+                            <textarea id="meta_description" class="form-control" name="meta_description" placeholder="Meta Description" required></textarea>
                         <div class="mb-3 col-sm-12">
                             <button class="btn btn-block btn-primary" type="submit">Submit</button>
                         </div>
@@ -81,6 +83,7 @@
         if($("#meta_footer").length > 0){
          CKEDITOR.replace( 'meta_footer' );
         }
+      
     });
         const slugify = str =>str
     .toLowerCase()
