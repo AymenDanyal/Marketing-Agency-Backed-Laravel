@@ -45,21 +45,21 @@
                             <label for="desktop_banner">Please Select Desktop Banner</label>
                             <input id="desktop_banner" name="desktop_banner" class="form-control" type="file">
                             @if($blog->desktop_banner)
-                                <img class="mt-3" id="desktop_banner_preview" src="{{ $blog->desktop_banner }}" style="width:100%">
+                                <img class="mt-3" id="desktop_banner_preview" src="{{asset('storage/' .  $blog->desktop_banner )}}" style="width:100%">
                             @endif
                         </div>
                         <div class="mb-3 col-sm-4">
                             <label for="mob_banner">Please Select Mobile Banner</label>
                             <input id="mob_banner" name="mob_banner" class="form-control" type="file">
                             @if($blog->mob_banner)
-                                <img class="mt-3" id="mob_banner_preview" src="{{ $blog->mob_banner }}" style="width:100%">
+                                <img class="mt-3" id="mob_banner_preview" src="{{asset('storage/' .  $blog->mob_banner) }}" style="width:100%">
                             @endif
                         </div>
                         <div class="mb-3 col-sm-4">
                             <label for="thumbnail">Please Select Thumbnail</label>
                             <input id="thumbnail" name="thumbnail" class="form-control" type="file">
                             @if($blog->thumbnail)
-                                <img class="mt-3" id="thumbnail_preview" src="{{ $blog->thumbnail }}" style="width:100%">
+                                <img class="mt-3" id="thumbnail_preview" src="{{asset('storage/' .  $blog->thumbnail) }}" style="width:100%">
                             @endif
                         </div>
                         <div class="mb-3 col-sm-12">

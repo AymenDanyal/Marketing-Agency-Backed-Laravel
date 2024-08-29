@@ -33,7 +33,8 @@
                             <td>{{ $product->title ?? 'N/A' }}</td>
                             <td>
                                 @if($product->image)
-                                <img src="{{ asset($product->image) }}" alt="Thumbnail" width="100">
+                                <img  src="{{ asset('storage/' . $product->image) }}" alt="Thumbnail" width="100">
+                                
                                 @else
                                 No Image
                                 @endif

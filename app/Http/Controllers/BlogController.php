@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Models\Blogcat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
@@ -42,34 +43,37 @@ class BlogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+{
+    $request->validate([
+        'slug' => 'required|string|max:260',
+        'title' => 'required|string|max:260',
+        'cat_id' => 'required|integer',
+        'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'desktop_banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'mob_banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'content' => 'required|string',
+        'summary' => 'required|string',
+    ]);
 
+    $thumbnailPath = $request->hasFile('thumbnail') ? $request->file('thumbnail')->store('uploads', 'public') : null;
+    $desktopBannerPath = $request->hasFile('desktop_banner') ? $request->file('desktop_banner')->store('uploads', 'public') : null;
+    $mobBannerPath = $request->hasFile('mob_banner') ? $request->file('mob_banner')->store('uploads', 'public') : null;
 
-        $request->validate([
-            'slug' => 'required|string|max:260',
-            'title' => 'required|string|max:260',
-            'cat_id' => 'required|integer',
-            'thumbnail' => 'required',
-            'desktop_banner' => 'required',
-            'mob_banner' => 'required',
-            'content' => 'required|string',
-            'summary' => 'required|string',
-        ]);
+    $blog = Blog::create([
+        'slug' => $request->slug,
+        'title' => $request->title,
+        'cat_id' => $request->cat_id,
+        'thumbnail' => $thumbnailPath,
+        'desktop_banner' => $desktopBannerPath,
+        'mob_banner' => $mobBannerPath,
+        'content' => $request->content,
+        'summary' => $request->summary,
+        'date_created' => $request->date_created,
+    ]);
 
-        $blog = Blog::create([
-            'slug' => $request->slug,
-            'title' => $request->title,
-            'cat_id' => $request->cat_id,
-            'thumbnail' => $request->thumbnail,
-            'desktop_banner' => $request->desktop_banner,
-            'mob_banner' => $request->mob_banner,
-            'content' => $request->content,
-            'summary' => $request->summary,
-            'date_created' => $request->date_created,
-        ]);
+    return redirect()->route('blogs.index')->with('success', 'Blog created successfully.');
+}
 
-        return redirect()->route('blogs.index')->with('success', 'Blog created successfully.');
-    }
 
     /**
      * Display the specified blog.
@@ -115,33 +119,55 @@ class BlogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //dd($request->all());
-        $request->validate([
-            'slug' => 'sometimes|string|max:260|unique:blogs,slug,' . $id,
-            'title' => 'sometimes|string|max:260',
-            'cat_id' => 'sometimes|integer',
-            'thumbnail' => 'sometimes|string',
-            'desktop_banner' => 'sometimes|string',
-            'mob_banner' => 'sometimes|string',
-            'content' => 'sometimes|string',
-            'summary' => 'sometimes|string',
-        ]);
+{
+    $request->validate([
+        'slug' => 'sometimes|string|max:260|unique:blogs,slug,' . $id,
+        'title' => 'sometimes|string|max:260',
+        'cat_id' => 'sometimes|integer',
+        'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'desktop_banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'mob_banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'content' => 'sometimes|string',
+        'summary' => 'sometimes|string',
+    ]);
 
-        $blog = Blog::find($id);
+    $blog = Blog::find($id);
 
-        if (!$blog) {
-            return response()->json(['message' => 'Blog not found'], 404);
-        }
-
-        $blog->update($request->only([
-            'slug', 'title', 'cat_id', 'thumbnail', 
-            'desktop_banner', 'mob_banner', 'content', 
-            'summary', 'date_created'
-        ]));
-
-        return redirect()->route('blogs.index')->with('success', 'Blog updated successfully.');
+    if (!$blog) {
+        return response()->json(['message' => 'Blog not found'], 404);
     }
+
+    if ($request->hasFile('thumbnail')) {
+        // Delete old file if it exists
+        if ($blog->thumbnail) {
+            Storage::disk('public')->delete($blog->thumbnail);
+        }
+        $blog->thumbnail = $request->file('thumbnail')->store('uploads', 'public');
+    }
+
+    if ($request->hasFile('desktop_banner')) {
+        // Delete old file if it exists
+        if ($blog->desktop_banner) {
+            Storage::disk('public')->delete($blog->desktop_banner);
+        }
+        $blog->desktop_banner = $request->file('desktop_banner')->store('uploads', 'public');
+    }
+
+    if ($request->hasFile('mob_banner')) {
+        // Delete old file if it exists
+        if ($blog->mob_banner) {
+            Storage::disk('public')->delete($blog->mob_banner);
+        }
+        $blog->mob_banner = $request->file('mob_banner')->store('uploads', 'public');
+    }
+
+    $blog->update($request->only([
+        'slug', 'title', 'cat_id', 'content', 'summary', 'date_created'
+    ]));
+
+    return redirect()->route('blogs.index')->with('success', 'Blog updated successfully.');
+}
+
 
     /**
      * Remove the specified blog from storage.
@@ -150,18 +176,31 @@ class BlogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        
-        $blog = Blog::find($id);
+{
+    $blog = Blog::find($id);
 
-        if (!$blog) {
-            return response()->json(['message' => 'Blog not found'], 404);
-        }
-
-        $blog->delete();
-
-        return redirect()->route('blogs.index')->with('success', 'Blog deleted successfully.');
+    if (!$blog) {
+        return response()->json(['message' => 'Blog not found'], 404);
     }
+
+    // Delete files if they exist
+    if ($blog->thumbnail) {
+        Storage::disk('public')->delete($blog->thumbnail);
+    }
+
+    if ($blog->desktop_banner) {
+        Storage::disk('public')->delete($blog->desktop_banner);
+    }
+
+    if ($blog->mob_banner) {
+        Storage::disk('public')->delete($blog->mob_banner);
+    }
+
+    $blog->delete();
+
+    return redirect()->route('blogs.index')->with('success', 'Blog deleted successfully.');
+}
+
  
 
 
