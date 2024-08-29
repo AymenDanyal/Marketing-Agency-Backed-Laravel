@@ -14,7 +14,6 @@
                             <th>S.No</th>
                             <th>Name</th>
                             <th>Image</th>
-
                             <th>Description</th>
                             <th>Meta title</th>
                             <th>Meta footer</th>

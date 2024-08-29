@@ -34,7 +34,7 @@ class AuthController extends Controller
         // Attempt to log the user in
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
            
-            return redirect()->route('products.index'); // Change 'dashboard' to your intended route
+            return redirect()->route('dashboard'); // Change 'dashboard' to your intended route
         }
         // If login attempt failed, redirect back with an error message
         return redirect()->back()->with('msg', 'Invalid login credentials');

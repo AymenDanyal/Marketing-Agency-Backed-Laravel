@@ -11,6 +11,15 @@
                 <form action="{{ route('product-cats.store') }}" class="user" enctype="multipart/form-data" method="post">
                     @csrf
                     <div class="row form-group">
+                        @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                         <div class="col-sm-12 mb-3">
                             <input class="form-control" name="cat_name" placeholder="Product Category Name" required>
                         </div>

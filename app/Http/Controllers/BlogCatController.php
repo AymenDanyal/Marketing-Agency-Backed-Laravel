@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Blogcat;
+use App\Models\BlogCat;
 
 class BlogCatController extends Controller
 {
     public function index()
     {
-        $blogCat = Blogcat::get();
+        $blogCat = BlogCat::get();
         return view('pages.blogCat.index', compact('blogCat'));
     }
 
@@ -26,7 +26,7 @@ class BlogCatController extends Controller
 
         ]);
 
-        $blog = Blogcat::create([
+        $blog = BlogCat::create([
             'category' => $request->cat_name,
             'slug' => $request->cat_slug
         ]);
@@ -49,7 +49,7 @@ class BlogCatController extends Controller
     }
     public function edit($id)
     {
-        $cat = Blogcat::find($id);
+        $cat = BlogCat::find($id);
 
         if (!$cat) {
             return response()->json(['message' => 'Blog not found'], 404);

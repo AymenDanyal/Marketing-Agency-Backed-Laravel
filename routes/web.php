@@ -11,10 +11,11 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 
 Route::group(['middleware' => 'auth'], function () {
-   
+    
     Route::get('/dashboard', function () {
         return view('pages.dashboard');
-    });
+    })->name('dashboard');
+    
 
 
     Route::prefix('products')->group(function () {
@@ -99,6 +100,6 @@ Route::group(['middleware' => 'guest'], function () {
     // Route to handle login submission
     Route::post('/', [AuthController::class, 'login'])->name('login.submit');
 
-    // Route to handle logout
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-});
+    });
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

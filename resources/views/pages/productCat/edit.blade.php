@@ -11,6 +11,15 @@
                 <form action="{{ route('product-cats.update', $cat->id) }}" class="user" enctype="multipart/form-data" method="POST">
                     @csrf
                     @method('PUT')
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <input name="id" value="{{ $cat->id }}" type="hidden">
                     <div class="row form-group">
                         <div class="col-sm-12 mb-3">
