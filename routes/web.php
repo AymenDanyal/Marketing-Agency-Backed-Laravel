@@ -100,6 +100,6 @@ Route::group(['middleware' => 'guest'], function () {
     // Route to handle login submission
     Route::post('/', [AuthController::class, 'login'])->name('login.submit');
 
-    });
+});
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

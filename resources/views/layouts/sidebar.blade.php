@@ -36,10 +36,10 @@
         </div>
     </li>
     <li class="nav-item">
-        <a  class="nav-link collapsed"  href="{{ route('contact-queries.index') }}"> 
+        {{-- <a  class="nav-link collapsed"  href="{{ route('contact-queries.index') }}"> 
             <i class="fas fa-phone-square-alt"></i> 
             <span>Contact Queries</span>
-        </a>
+        </a> --}}
     </li>
     <hr class="d-none d-md-block sidebar-divider">
     <div class="d-none d-md-inline text-center">

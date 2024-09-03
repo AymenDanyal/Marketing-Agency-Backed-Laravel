@@ -5,7 +5,7 @@
 
     <div class="row">
         <!-- Pending Requests Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        {{-- <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -56,11 +56,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <form id="logout-form" action="/logout" method="POST" >
             @csrf
             <button type="submit" class="dropdown-item">
-                <i class="fas fa-fw fa-sign-out-alt fa-sm mr-2 text-gray-400"></i> Logvvout
+                <i class="fas fa-fw fa-sign-out-alt fa-sm mr-2 text-gray-400"></i> Logout
             </button>
         </form>
     

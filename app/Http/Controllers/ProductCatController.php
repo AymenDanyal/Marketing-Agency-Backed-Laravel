@@ -26,9 +26,9 @@ class ProductCatController extends Controller
             'category' => 'required|string|max:255', 
             'description' => 'required|string|max:255', 
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Changed validation to handle file uploads
-            'meta_description' => 'required|string|max:2000', 
-            'meta_title' => 'nullable|string|max:2000', 
-            'meta_footer' => 'nullable|string|max:2000', 
+            'meta_description' => 'required|string|max:5000', 
+            'meta_title' => 'nullable|string|max:5000', 
+            'meta_footer' => 'nullable|string|max:5000', 
             'parent_id' => 'required|integer', 
             'sort_by' => 'nullable|integer', 
             'slug' => 'nullable|string|max:255', 
@@ -54,7 +54,7 @@ class ProductCatController extends Controller
             'created_at' => $request->created_at,
         ]);
     
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+        return redirect()->route('product-cats.index')->with('success', 'Product created successfully.');
     }
     
     

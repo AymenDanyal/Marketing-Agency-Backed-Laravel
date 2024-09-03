@@ -38,10 +38,7 @@
                             <label>Category Image</label> 
                             <input class="form-control" value="{{ $cat->image }}" name="mob_banner" required type="file">
                         </div>
-                        <div class="col-sm-12 mb-3 customCheckbox" style="display:flex;align-items:center;gap:.5rem">
-                            <label style="margin-bottom:0">Is Parent</label>
-                            <input name="is_parent" class="form-control checkbox" style="width:max-content" type="checkbox" {{ $cat->is_parent == 1 ? 'checked' : '' }}>
-                        </div>
+                       
                         <div class="mb-3 col-sm-12">
                             <label>Meta Footer</label>
                             <textarea class="form-control" name="meta_footer"
@@ -57,6 +54,10 @@
                             <label>Meta Description</label> 
                             <textarea id="meta_description" name="meta_description" class="form-control"
                                 placeholder="Meta Description" required>{{ $cat->meta_description }}</textarea>
+                        </div>
+                        <div class="col-sm-12 mb-3 customCheckbox" style="display:flex;align-items:center;gap:.5rem">
+                            <label style="margin-bottom:0">Is Parent</label>
+                            <input name="is_parent" class="form-control checkbox" style="width:max-content" type="checkbox" {{ $cat->is_parent == 1 ? 'checked' : '' }}>
                         </div>
                         <div class="col-sm-12 mb-3 form-select" style="display:none" id="sub_cat">
                             <select id="sub_cats" name="parent_id">
