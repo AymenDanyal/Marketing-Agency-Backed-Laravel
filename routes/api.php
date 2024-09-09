@@ -21,7 +21,8 @@ Route::prefix('/product-cats')->group(function () {
 // API routes
 Route::prefix('/products')->group(function () {
     Route::get('/get-products', [ProductController::class, 'getProducts']);     // List all products
-    Route::get('/get-products/{slug}', [ProductController::class, 'getProductBySlug']);     // List all products
+    Route::get('/get-products/{slug}', [ProductController::class, 'getProductBySlug']); 
+    Route::get('/get-cat-pro/{slug}', [ProductController::class, 'getProductByCatSlug']); 
     Route::post('/', [ProductController::class, 'store']);    // Store a new product
     Route::get('{id}', [ProductController::class, 'show']);   // Show a specific product
     Route::put('{id}', [ProductController::class, 'update']); // Update a specific product

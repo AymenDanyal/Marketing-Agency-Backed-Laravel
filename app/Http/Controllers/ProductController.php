@@ -322,4 +322,53 @@ class ProductController extends Controller
         // Return the JSON response
         return response()->json($response);
     }
+    public function getProductByCatSlug($slug)
+    {
+        try {
+            // Find the category by slug
+            $category = ProductCat::where('slug', $slug)->firstOrFail();
+            
+            // Get all products with the matching category ID
+            $products = Product::where('cat_id', $category->id)->get();
+    
+            // Prepare the response
+            $response = [
+                'category' => $category->category, // Use the category name or slug as needed
+                'products' => $products->map(function($product) use ($category) {
+                    return [
+                        'id' => $product->id,
+                        'title' => $product->title,
+                        'slug' => $product->slug,
+                        'cat_id' => $product->cat_id,
+                        'description' => $product->description,
+                        'meta_footer' => $product->meta_footer,
+                        'image' => $product->image,
+                        'file' => $product->file,
+                        'summary' => $product->summary,
+                        'created_at' => $product->created_at,
+                        'meta_title' => $product->meta_title,
+                        'meta_description' => $product->meta_description,
+                        'category' => $category->category, // Include category in each product if needed
+                    ];
+                }),
+            ];
+    
+            // Return the JSON response
+            return response()->json($response);
+    
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Category not found, return a 404 response
+            return response()->json([
+                'error' => 'Category not found',
+            ], 404);
+        
+        } catch (\Exception $e) {
+            // Catch any other errors and return a 500 response
+            return response()->json([
+                'error' => 'An unexpected error occurred',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+    
 }
