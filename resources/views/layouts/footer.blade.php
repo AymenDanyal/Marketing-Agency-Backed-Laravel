@@ -1,6 +1,6 @@
 <footer class="bg-white sticky-footer">
     <div class="my-auto container">
-        <div class="my-auto copyright text-center"><span>Copyright © Avon 2022</span></div>
+        <div class="my-auto copyright text-center"><span>Copyright © Artxpro 2024</span></div>
     </div>
 </footer><a class="rounded scroll-to-top" href="#page-top"><i class="fa-angle-up fas"></i></a>
 <div class="fade modal" role="dialog" aria-hidden="true" aria-labelledby="exampleModalLabel" id="logoutModal"

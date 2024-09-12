@@ -4,7 +4,7 @@
 @include('layouts.head')    
     <style>
         .login_logo {
-            background-image: url('{{ asset('assets/logo/avon.png') }}');
+            background-image: url('{{ asset('assets/logo/artxpro.png') }}');
             background-position: center center;
             background-repeat: no-repeat;
             background-size: 350px;

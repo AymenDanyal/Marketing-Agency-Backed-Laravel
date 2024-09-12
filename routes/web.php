@@ -6,8 +6,6 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogCatController;
 use App\Http\Controllers\ContactQueryController;
-use App\Http\Controllers\ProductCatController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 
 Route::group(['middleware' => 'auth'], function () {
@@ -18,26 +16,7 @@ Route::group(['middleware' => 'auth'], function () {
     
 
 
-    Route::prefix('products')->group(function () {
-        Route::get('/', [ProductController::class, 'index'])->name('products.index');  // List all products
-        Route::get('create', [ProductController::class, 'create'])->name('products.create'); // Show form to create a new product
-        Route::post('/', [ProductController::class, 'store'])->name('products.store');   // Store a new product
-        Route::get('{id}', [ProductController::class, 'show'])->name('products.show');       // Show a specific product
-        Route::get('{id}/edit', [ProductController::class, 'edit'])->name('products.edit');   // Show form to edit a specific product
-        Route::put('{id}', [ProductController::class, 'update'])->name('products.update');    // Update a specific product
-        Route::delete('{id}', [ProductController::class, 'destroy'])->name('products.delete'); // Delete a specific product
-    });
-
-
-    Route::prefix('product-cats')->group(function () {
-        Route::get('/', [ProductCatController::class, 'index'])->name('product-cats.index');  // List all product categories
-        Route::get('create', [ProductCatController::class, 'create'])->name('product-cats.create'); // Show form to create a new product category
-        Route::post('/', [ProductCatController::class, 'store'])->name('product-cats.store');   // Store a new product category
-        Route::get('{id}', [ProductCatController::class, 'show'])->name('product-cats.show');       // Show a specific product category
-        Route::get('{id}/edit', [ProductCatController::class, 'edit'])->name('product-cats.edit');   // Show form to edit a specific product category
-        Route::put('{id}', [ProductCatController::class, 'update'])->name('product-cats.update');    // Update a specific product category
-        Route::delete('{id}', [ProductCatController::class, 'destroy'])->name('product-cats.destroy'); // Delete a specific product category
-    });
+   
     // Web routes
     Route::prefix('contact-queries')->group(function () {
         Route::get('/', [ContactQueryController::class, 'index'])->name('contact-queries.index');  // List all contact queries

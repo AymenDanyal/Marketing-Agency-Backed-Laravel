@@ -7,7 +7,7 @@
     <meta name="author" content="">
 
     <!-- Title -->
-    <title>Avon - Admin</title>
+    <title>Artxpro - Admin</title>
 
     <!-- Stylesheets -->
     <!-- Google Fonts (Nunito) -->

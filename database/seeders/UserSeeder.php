@@ -19,8 +19,8 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'Admin',
-            'email' => 'admin@avon.com',
-            'password' => Hash::make('@dmin@von21'), // Hash the password for security
+            'email' => 'admin@artxpro.com',
+            'password' => Hash::make('@dmin@rtxpro21'), // Hash the password for security
             'remember_token' => Str::random(10),
             'created_at' => now(),
             'updated_at' => now(),

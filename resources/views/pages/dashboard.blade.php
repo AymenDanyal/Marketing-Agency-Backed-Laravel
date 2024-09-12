@@ -57,12 +57,7 @@
                 </div>
             </div>
         </div> --}}
-        <form id="logout-form" action="/logout" method="POST" >
-            @csrf
-            <button type="submit" class="dropdown-item">
-                <i class="fas fa-fw fa-sign-out-alt fa-sm mr-2 text-gray-400"></i> Logout
-            </button>
-        </form>
+       
     
         
     </div>

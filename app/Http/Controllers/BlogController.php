@@ -229,6 +229,7 @@ class BlogController extends Controller
                     'blog_id' => $blog->id, // Assuming 'blog_id' is the same as 'id'
                     'blog_slug' => $blog->slug, // Assuming 'blog_slug' is the same as 'slug'
                 ];
+                
             }),
         ];
 
@@ -241,8 +242,8 @@ class BlogController extends Controller
             // Fetch the blog by slug
             $blog = Blog::where('slug', $slug)->firstOrFail();
 
-            // Fetch the last 5 recent blogs
-            $recentBlogs = Blog::orderBy('date_created', 'desc')->take(5)->get();
+            // // Fetch the last 5 recent blogs
+            // $recentBlogs = Blog::orderBy('date_created', 'desc')->take(5)->get();
 
             // Prepare the response
             return response()->json([
@@ -262,22 +263,22 @@ class BlogController extends Controller
                     'blog_id' => $blog->id,
                     'blog_slug' => $blog->slug,
                 ],
-                'recent' => $recentBlogs->map(function ($recentBlog) {
-                    return [
-                        'id' => $recentBlog->id,
-                        'slug' => 'blog',
-                        'title' => $recentBlog->title,
-                        'cat_id' => $recentBlog->cat_id,
-                        'thumbnail' => $recentBlog->thumbnail,
-                        'desktop_banner' => $recentBlog->desktop_banner,
-                        'mob_banner' => $recentBlog->mob_banner,
-                        'content' => $recentBlog->content,
-                        'summary' => $recentBlog->summary,
-                        'date_created' => $recentBlog->date_created->format('Y-m-d H:i:s'),
-                        'blog_id' => $recentBlog->id,
-                    'blog_slug' => $recentBlog->slug,
-                    ];
-                }),
+                // 'recent' => $recentBlogs->map(function ($recentBlog) {
+                //     return [
+                //         'id' => $recentBlog->id,
+                //         'slug' => 'blog',
+                //         'title' => $recentBlog->title,
+                //         'cat_id' => $recentBlog->cat_id,
+                //         'thumbnail' => $recentBlog->thumbnail,
+                //         'desktop_banner' => $recentBlog->desktop_banner,
+                //         'mob_banner' => $recentBlog->mob_banner,
+                //         'content' => $recentBlog->content,
+                //         'summary' => $recentBlog->summary,
+                //         'date_created' => $recentBlog->date_created->format('Y-m-d H:i:s'),
+                //         'blog_id' => $recentBlog->id,
+                //     'blog_slug' => $recentBlog->slug,
+                //     ];
+                // }),
             ], 200); // HTTP 200 OK
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             // Blog not found
