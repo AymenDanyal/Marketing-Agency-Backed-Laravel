@@ -15,7 +15,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./README.md  # The directory to deploy; change as needed
+          local-dir: ./  # The directory to deploy; change as needed
           server-dir: /artxpro.com/artx_backend/
           protocol: ftp
           port: 21
