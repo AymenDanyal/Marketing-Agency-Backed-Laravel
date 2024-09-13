@@ -38,18 +38,71 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3 col-sm-4">
-                            <label>Please Select Desktop Banner</label> 
-                            <input class="form-control" name="desktop_banner" required type="file">
+                        <div class="mb-3 col-sm-12">
+                            <div class="row">
+                                <!-- Desktop Banner -->
+                                <div class="col-md-4 mt-4">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <a class="lfm btn btn-primary" data-input="desktop_banner"
+                                                data-preview="desktop_holder">
+                                                <i class="fa fa-picture-o"></i> Please Select Desktop Banner
+                                            </a>
+                                        </span>
+                                        <input id="desktop_banner" class="form-control" type="text"
+                                            name="desktop_banner" >
+                                    </div>
+                                    <div id="desktop_holder" style="margin-top: 15px;">
+                                       
+                                        <img class="mt-3" id="desktop_banner_preview" src=""
+                                            style="width: 100%">
+                                      
+                                    </div>
+                                </div>
+
+                                <!-- Mobile Banner -->
+                                <div class="col-md-4 mt-4">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <a class="lfm btn btn-primary" data-input="mob_banner"
+                                                data-preview="mob_banner_holder">
+                                                <i class="fa fa-picture-o"></i> Please Select Mobile Banner
+                                            </a>
+                                        </span>
+                                        <input id="mob_banner" class="form-control" type="text" name="mob_banner" >
+                                    </div>
+                                    <div id="mob_banner_holder" style="margin-top: 15px;">
+                                       
+                                        <img class="mt-3" id="mob_banner_preview" src=""
+                                            style="width: 100%">
+                                       
+                                    </div>
+                                </div>
+
+                                <!-- Thumbnail -->
+                                <div class="col-md-4 mt-4">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <a class="lfm btn btn-primary" data-input="thumbnail"
+                                                data-preview="thumbnail_holder">
+                                                <i class="fa fa-picture-o"></i> Please Select Thumbnail
+                                            </a>
+                                        </span>
+                                        <input id="thumbnail" class="form-control" type="text" name="thumbnail" >
+                                    </div>
+                                    <div id="thumbnail_holder" style="margin-top: 15px; ">
+                                       
+                                        <img class="mt-3" id="thumbnail_preview_img" src=""
+                                            style="width: 100%">
+                                       
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="mb-3 col-sm-4">
-                            <label>Please Select Mobile Banner</label> 
-                            <input class="form-control" name="mob_banner" required type="file">
-                        </div>
-                        <div class="mb-3 col-sm-4">
-                            <label>Please Select Thumbnail</label> 
-                            <input class="form-control" name="thumbnail" required type="file">
-                        </div>
+
+
+
                         <div class="mb-3 col-sm-12">
                             <label>Blog Summary 
                                 <small>Please write a short summary of the blog</small>
@@ -74,6 +127,11 @@
 @push('scripts')
 <script>
     jQuery(document).ready(function($) {
+
+        var route_prefix = "/laravel-filemanager";
+        $('.lfm').filemanager('image', {prefix: route_prefix});
+
+
         if ($("#blog_content").length > 0) {
             CKEDITOR.replace('blog_content');
             CKEDITOR.instances['blog_content'].on('paste', function(event) {

@@ -137,13 +137,13 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+
 <script type="text/javascript">
     jQuery(document).ready(function($) {
         // Preview file inputs
 
-        var route_prefix = "/artx_backend/public/laravel-filemanager";
-        $('.lfm').filemanager('file', {prefix: route_prefix});
+        var route_prefix = "/laravel-filemanager";
+        $('.lfm').filemanager('image', {prefix: route_prefix});
 
 
         $('input[type="file"]').change(function(e) {
