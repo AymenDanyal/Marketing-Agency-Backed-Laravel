@@ -1,4 +1,5 @@
 <ul class="navbar-nav accordion bgside sidebar sidebar-dark" id="accordionSidebar">
+    
     <a class="d-flex align-items-center justify-content-center sidebar-brand" href="/">
         <div class="sidebar-brand-icon">
             <img class="logo img-fluid d-block auto p-2 p-md-4" src="{{asset('/logo/artxpro.png')}}" alt="Avon Logo">
@@ -6,7 +7,12 @@
     </a>
     <hr class="sidebar-divider my-0">
 
-
+    <li class="nav-item">
+        <a  class="nav-link collapsed"  href="{{ route('media-manager') }}"> 
+            <i class="fa-solid fa-photo-film"></i>
+           <span>Media Manager</span>
+       </a> 
+   </li>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" aria-expanded="true" data-toggle="collapse" aria-controls="collapseTwo"
             data-target="#blogs">

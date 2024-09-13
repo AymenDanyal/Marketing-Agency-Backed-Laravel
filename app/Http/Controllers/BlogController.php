@@ -48,24 +48,21 @@ class BlogController extends Controller
         'slug' => 'required|string|max:260',
         'title' => 'required|string|max:260',
         'cat_id' => 'required|integer',
-        'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'desktop_banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'mob_banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'thumbnail' => 'nullable|string|max:260',
+        'desktop_banner' => 'nullable|string|max:260',
+        'mob_banner' => 'nullable|string|max:260',
         'content' => 'required|string',
         'summary' => 'required|string',
     ]);
 
-    $thumbnailPath = $request->hasFile('thumbnail') ? $request->file('thumbnail')->store('uploads', 'public') : null;
-    $desktopBannerPath = $request->hasFile('desktop_banner') ? $request->file('desktop_banner')->store('uploads', 'public') : null;
-    $mobBannerPath = $request->hasFile('mob_banner') ? $request->file('mob_banner')->store('uploads', 'public') : null;
-
+  
     $blog = Blog::create([
         'slug' => $request->slug,
         'title' => $request->title,
         'cat_id' => $request->cat_id,
-        'thumbnail' => $thumbnailPath,
-        'desktop_banner' => $desktopBannerPath,
-        'mob_banner' => $mobBannerPath,
+        'thumbnail' => $request->thumbnail,
+        'desktop_banner' => $request->desktop_banner,
+        'mob_banner' => $request->mob_banner,
         'content' => $request->content,
         'summary' => $request->summary,
         'date_created' => $request->date_created,
@@ -124,45 +121,17 @@ class BlogController extends Controller
         'slug' => 'sometimes|string|max:260|unique:blogs,slug,' . $id,
         'title' => 'sometimes|string|max:260',
         'cat_id' => 'sometimes|integer',
-        'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'desktop_banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'mob_banner' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        'thumbnail' => 'nullable|string|max:260',
+        'desktop_banner' => 'nullable|string|max:260',
+        'mob_banner' => 'nullable|string|max:260',
         'content' => 'sometimes|string',
         'summary' => 'sometimes|string',
     ]);
 
     $blog = Blog::find($id);
 
-    if (!$blog) {
-        return response()->json(['message' => 'Blog not found'], 404);
-    }
-
-    if ($request->hasFile('thumbnail')) {
-        // Delete old file if it exists
-        if ($blog->thumbnail) {
-            Storage::disk('public')->delete($blog->thumbnail);
-        }
-        $blog->thumbnail = $request->file('thumbnail')->store('uploads', 'public');
-    }
-
-    if ($request->hasFile('desktop_banner')) {
-        // Delete old file if it exists
-        if ($blog->desktop_banner) {
-            Storage::disk('public')->delete($blog->desktop_banner);
-        }
-        $blog->desktop_banner = $request->file('desktop_banner')->store('uploads', 'public');
-    }
-
-    if ($request->hasFile('mob_banner')) {
-        // Delete old file if it exists
-        if ($blog->mob_banner) {
-            Storage::disk('public')->delete($blog->mob_banner);
-        }
-        $blog->mob_banner = $request->file('mob_banner')->store('uploads', 'public');
-    }
-
     $blog->update($request->only([
-        'slug', 'title', 'cat_id', 'content', 'summary', 'date_created'
+        'slug', 'title', 'cat_id', 'content', 'summary', 'date_created', 'thumbnail','mob_banner','desktop_banner'
     ]));
 
     return redirect()->route('blogs.index')->with('success', 'Blog updated successfully.');

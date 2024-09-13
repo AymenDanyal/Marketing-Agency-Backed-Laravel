@@ -14,8 +14,13 @@ Route::group(['middleware' => 'auth'], function () {
         return view('pages.dashboard');
     })->name('dashboard');
     
-
-
+    Route::get('/media-manager', function () {
+        return view('pages.lfm.index');
+    })->name('media-manager');
+    
+    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+        \UniSharp\LaravelFilemanager\Lfm::routes();
+    });
    
     // Web routes
     Route::prefix('contact-queries')->group(function () {
