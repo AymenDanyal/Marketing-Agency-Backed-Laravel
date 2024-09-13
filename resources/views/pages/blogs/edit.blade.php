@@ -142,7 +142,7 @@
     jQuery(document).ready(function($) {
         // Preview file inputs
 
-        var route_prefix = "/laravel-filemanager";
+        var route_prefix = "/artx_backend/public/laravel-filemanager";
         $('.lfm').filemanager('image', {prefix: route_prefix});
 
 

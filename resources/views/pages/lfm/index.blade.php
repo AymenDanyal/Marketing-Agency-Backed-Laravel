@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <iframe src="/laravel-filemanager" style="width: 100%; height: 500px; overflow: hidden; border: none;"></iframe>
+    <iframe src="/artx_backend/public/laravel-filemanager" style="width: 100%; height: 500px; overflow: hidden; border: none;"></iframe>
 </div>
 @endsection
 
@@ -10,4 +10,4 @@
 <script type="text/javascript">
 
 </script>
-@endpush bgfdbfdbd
+@endpush

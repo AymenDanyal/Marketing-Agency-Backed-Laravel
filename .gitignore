@@ -13,8 +13,8 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-resources/views/auth/login.blade.php
-resources/views/layouts/header.blade.php
-resources/views/pages/lfm/index.blade.php
-resources/views/pages/blogs/edit.blade.php
-resources/views/layouts/footer.blade.php
+# resources/views/auth/login.blade.php
+# resources/views/layouts/header.blade.php
+# resources/views/pages/lfm/index.blade.php
+# resources/views/pages/blogs/edit.blade.php
+# resources/views/layouts/footer.blade.php
