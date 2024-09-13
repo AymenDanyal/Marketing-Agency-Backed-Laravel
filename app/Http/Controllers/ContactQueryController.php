@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactQuery;
+use App\Models\Job;
+use App\Models\Brief;
 use Illuminate\Http\Request;
 
 class ContactQueryController extends Controller
@@ -147,6 +149,67 @@ class ContactQueryController extends Controller
             // Return a JSON response with a 500 status code if deletion fails
             return response()->json(['success' => false, 'message' => 'An error occurred while deleting the contact query. Please try again later.'], 500);
         }
+    }
+
+
+
+    public function jobStore(Request $request)
+    {
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'id' => 'required|integer',
+            'name' => 'required|string|max:250',
+            'email' => 'required|email|max:250',
+            'contact' => 'required|string|max:250',
+            'appliedfor' => 'required|string|max:250',
+            'portfolio' => 'required|string|max:250',
+            'cv' => 'required|string|max:250',
+        ]);
+
+        // Create and save the JobQuery entry
+        $jobQuery = Job::create($validatedData);
+
+        return response()->json(['message' => 'Job query saved successfully!', 'data' => $jobQuery], 201);
+    }
+
+    public function briefStore(Request $request)
+    {
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'id' => 'required|integer',
+            'name' => 'required|string|max:250',
+            'email' => 'required|email|max:250',
+            'contact' => 'required|string|max:250',
+            'company' => 'required|string|max:250',
+            'budget' => 'required|string|max:250',
+            'webUrl' => 'required|string|max:250',
+            'date' => 'required|string|max:250',
+            'message' => 'required|string',
+        ]);
+
+        // Create and save the BriefQuery entry
+        $briefQuery = Brief::create($validatedData);
+
+        return response()->json(['message' => 'Brief query saved successfully!', 'data' => $briefQuery], 201);
+    }
+
+
+    public function contactStore(Request $request)
+    {
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'id' => 'required|integer',
+            'name' => 'required|string|max:250',
+            'email' => 'required|email|max:250',
+            'company' => 'required|string|max:250',
+            'webUrl' => 'required|string|max:250',
+            'message' => 'required|string',
+        ]);
+
+        // Create and save the ContactQuery entry
+        $contactQuery = ContactQuery::create($validatedData);
+
+        return response()->json(['message' => 'Contact query saved successfully!', 'data' => $contactQuery], 201);
     }
 
 }

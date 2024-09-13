@@ -47,6 +47,10 @@ Route::prefix('/contact-queries')->group(function () {
     Route::delete('{id}', [ContactQueryController::class, 'destroy']); // Delete a specific contact query
 });
 
+Route::post('/job-query', [ContactQueryController::class, 'jobStore']);
+Route::post('/brief-query', [ContactQueryController::class, 'briefStore']);
+Route::post('/contact-query', [ContactQueryController::class, 'contactStore']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

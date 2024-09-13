@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ContactQuery extends Model
+class Job extends Model
 {
     protected $table = 'contact_queries'; // Specify the table name if different from the model name
     protected $primaryKey = 'id'; // Primary key column
@@ -14,12 +14,12 @@ class ContactQuery extends Model
         'id',
         'name',
         'email',
-        'company',
-        'webUrl',
-        'message',
-        'date_created'
+        'contact',
+        'appliedfor',
+        'portfolio',
+        'cv',
+        'date_created',
     ];
-
 
     protected $casts = [
         'date_created' => 'datetime',

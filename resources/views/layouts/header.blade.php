@@ -1,4 +1,3 @@
-
 <nav class="bg-white mb-4 navbar navbar-expand navbar-light shadow static-top topbar">
     <button class="rounded-circle btn btn-link d-md-none mr-3" id="sidebarToggleTop">
         <i class="fa fa-bars"></i>
