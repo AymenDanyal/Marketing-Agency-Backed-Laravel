@@ -1,6 +1,0 @@
-Apis
-Get all product =>  https://avon.admin.simboz.com/public/api/get-products
-Get single product => https://www.avoncommercial.net/products/{product-slug }
-Get all blogs => https://avon.admin.simboz.com/public/api/get-blogs
-Get single blog => https://www.avoncommercial.net/blog/{blog-slug}
-Post Contact query => https://avon.admin.simboz.com/public/api/send-contact-query

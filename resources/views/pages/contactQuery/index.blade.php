@@ -21,8 +21,9 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody id="data_here">
+                   
                         @if($queries && $queries->isNotEmpty())
+                        <tbody id="data_here">
                             @foreach($queries as $key => $contact)
                             <tr id="query-{{ $contact['id'] }}">
                                 <th>{{ $key + 1 }}</th>
@@ -38,6 +39,7 @@
                                     </button>
                                 </td>
                             </tr>
+                        </tbody>
                             @endforeach
                         @else
                         <tr>
@@ -46,7 +48,7 @@
                             </td>
                         </tr>
                         @endif
-                    </tbody>
+                   
                 </table>
             </div>
         </div>

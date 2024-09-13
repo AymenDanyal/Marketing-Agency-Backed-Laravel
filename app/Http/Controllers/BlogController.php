@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
-use App\Models\Blogcat;
+use App\Models\BlogCat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -32,7 +32,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        $cats=Blogcat::get();
+        $cats=BlogCat::get();
         return view('pages.blogs.create',compact('cats'));
     }
 
@@ -101,7 +101,7 @@ class BlogController extends Controller
     public function edit($id)
     {
         $blog = Blog::find($id);
-        $cats = Blogcat::get();
+        $cats = BlogCat::get();
 
         if (!$blog) {
             return response()->json(['message' => 'Blog not found'], 404);
