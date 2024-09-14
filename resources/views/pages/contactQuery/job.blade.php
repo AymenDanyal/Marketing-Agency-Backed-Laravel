@@ -5,7 +5,7 @@
 <div class="container-fluid">
     
     <div class="card mb-4 shadow">
-        <h1 class="heading">Contact Queries</h1>
+        <h1 class="heading">Job Queries</h1>
         <div class="card-body">
             <div class="table-responsive">
                 <table cellspacing="0" class="table table-bordered" id="contactQueries" width="100%">
@@ -86,7 +86,7 @@
         $('.delete-button').click(function(e) {
             e.preventDefault();
             var contactId = $(this).data('id');
-            var url = '{{ route('contact-queries.destroy', ':id') }}';
+            var url = '{{ route('job-queries.destroy', ':id') }}';
             url = url.replace(':id', contactId);
 
             if(confirm('Are you sure you want to delete this query?')) {

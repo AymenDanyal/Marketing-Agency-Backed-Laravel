@@ -6,9 +6,8 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactQueryController;
-use App\Http\Controllers\ProductCatController;
-use App\Http\Controllers\ProductController;
-
+use App\Http\Controllers\JobQueryController;
+use App\Http\Controllers\BriefQueryController;
 // API routes
 
 
@@ -45,11 +44,12 @@ Route::prefix('/contact-queries')->group(function () {
     Route::get('{id}', [ContactQueryController::class, 'show']);   // Show a specific contact query
     Route::put('{id}', [ContactQueryController::class, 'update']); // Update a specific contact query
     Route::delete('{id}', [ContactQueryController::class, 'destroy']); // Delete a specific contact query
+    
 });
 
-Route::post('/job-query', [ContactQueryController::class, 'jobStore']);
-Route::post('/brief-query', [ContactQueryController::class, 'briefStore']);
-Route::post('/contact-query', [ContactQueryController::class, 'contactStore']);
+Route::post('/job-query', [JobQueryController::class, 'store']);
+Route::post('/brief-query', [BriefQueryController::class, 'store']);
+Route::post('/contact-query', [ContactQueryController::class, 'store']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

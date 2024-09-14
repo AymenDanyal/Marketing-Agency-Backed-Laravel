@@ -6,6 +6,8 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogCatController;
 use App\Http\Controllers\ContactQueryController;
+use App\Http\Controllers\JobQueryController;
+use App\Http\Controllers\BriefQueryController;
 use App\Http\Controllers\AuthController;
 
 Route::group(['middleware' => 'auth'], function () {
@@ -32,7 +34,24 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('{id}', [ContactQueryController::class, 'update'])->name('contact-queries.update');    // Update a specific contact query
         Route::delete('{id}', [ContactQueryController::class, 'destroy'])->name('contact-queries.destroy'); // Delete a specific contact query
     });
-
+    Route::prefix('brief-queries')->group(function () {
+        Route::get('/', [BriefQueryController::class, 'index'])->name('brief-queries.index');  // List all contact queries
+        Route::get('create', [BriefQueryController::class, 'create'])->name('brief-queries.create'); // Show form to create a new contact query
+        Route::post('/', [BriefQueryController::class, 'store'])->name('brief-queries.store');   // Store a new contact query
+        Route::get('{id}', [BriefQueryController::class, 'show'])->name('brief-queries.show');       // Show a specific contact query
+        Route::get('{id}/edit', [BriefQueryController::class, 'edit'])->name('brief-queries.edit');   // Show form to edit a specific contact query
+        Route::put('{id}', [BriefQueryController::class, 'update'])->name('brief-queries.update');    // Update a specific contact query
+        Route::delete('{id}', [BriefQueryController::class, 'destroy'])->name('brief-queries.destroy'); // Delete a specific contact query
+    });
+    Route::prefix('job-queries')->group(function () {
+        Route::get('/', [JobQueryController::class, 'index'])->name('job-queries.index');  // List all contact queries
+        Route::get('create', [JobQueryController::class, 'create'])->name('job-queries.create'); // Show form to create a new contact query
+        Route::post('/', [JobQueryController::class, 'store'])->name('job-queries.store');   // Store a new contact query
+        Route::get('{id}', [JobQueryController::class, 'show'])->name('job-queries.show');       // Show a specific contact query
+        Route::get('{id}/edit', [JobQueryController::class, 'edit'])->name('job-queries.edit');   // Show form to edit a specific contact query
+        Route::put('{id}', [JobQueryController::class, 'update'])->name('job-queries.update');    // Update a specific contact query
+        Route::delete('{id}', [JobQueryController::class, 'destroy'])->name('job-queries.destroy'); // Delete a specific contact query
+    });
     Route::prefix('blogs')->group(function () {
         Route::get('/index', [BlogController::class, 'index'])->name('blogs.index');
         Route::get('/create', [BlogController::class, 'create'])->name('blogs.create');

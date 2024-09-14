@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContactQuery;
 use App\Models\Job;
-use App\Models\Brief;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Exception;
 
-class ContactQueryController extends Controller
+class JobQueryController extends Controller
 {
     /**
      * Display a listing of the contact queries.
@@ -19,8 +17,8 @@ class ContactQueryController extends Controller
      */
     public function index()
     {
-        $queries  = ContactQuery::all(); // Retrieve all contact queries
-        return view('pages.contactQuery.contactUs',compact('queries'));
+        $queries  = Job::all(); // Retrieve all contact queries
+        return view('pages.contactQuery.job',compact('queries'));
     }
 
     /**
@@ -47,22 +45,28 @@ class ContactQueryController extends Controller
             $validatedData = $request->validate([
                 'name' => 'required|string|max:250',
                 'email' => 'required|email|max:250',
-                'company' => 'required|string|max:250',
-                'webUrl' => 'required|string|max:250',
-                'message' => 'required|string',
+                'contact' => 'required|string|max:250',
+                'appliedfor' => 'required|string|max:250',
+                'portfolio' => 'required|string|max:250',
+                'cv' => 'required|string|max:250',
             ]);
 
-            // Create and save the ContactQuery entry
-            $contactQuery = ContactQuery::create($validatedData);
+            // Create and save the JobQuery entry
+            $jobQuery = Job::create($validatedData);
 
-            return response()->json(['message' => 'Contact query saved successfully!', 'data' => $contactQuery], 201);
+            return response()->json(['message' => 'Job query saved successfully!', 'data' => $jobQuery], 201);
         } catch (ValidationException $e) {
+            // Handle validation errors
             return response()->json(['message' => 'Validation failed', 'errors' => $e->errors()], 422);
         } catch (Exception $e) {
-            Log::error('ContactStore Error: ' . $e->getMessage());
+            // Log the error for debugging
+            Log::error('JobStore Error: ' . $e->getMessage());
+
+            // Handle other exceptions
             return response()->json(['message' => $e], 500);
         }
     }
+
 
     /**
      * Display the specified contact query.
@@ -72,13 +76,13 @@ class ContactQueryController extends Controller
      */
     public function show($id)
     {
-        $contactQuery = ContactQuery::find($id);
+        $job = Job::find($id);
 
-        if (!$contactQuery) {
+        if (!$job) {
             return response()->json(['message' => 'Contact query not found'], 404);
         }
 
-        return response()->json($contactQuery);
+        return response()->json($job);
     }
 
     /**
@@ -89,14 +93,14 @@ class ContactQueryController extends Controller
      */
     public function edit($id)
     {
-        $contactQuery = ContactQuery::find($id);
+        $job = Job::find($id);
 
-        if (!$contactQuery) {
+        if (!$job) {
             return response()->json(['message' => 'Contact query not found'], 404);
         }
 
         // Return view to edit contact query (if using web views)
-        return view('contact_queries.edit', compact('contactQuery'));
+        return view('contact_queries.edit', compact('job'));
     }
 
     /**
@@ -116,17 +120,17 @@ class ContactQueryController extends Controller
             'query' => 'sometimes|string',
         ]);
 
-        $contactQuery = ContactQuery::find($id);
+        $job = Job::find($id);
 
-        if (!$contactQuery) {
+        if (!$job) {
             return response()->json(['message' => 'Contact query not found'], 404);
         }
 
-        $contactQuery->update($request->only([
+        $job->update($request->only([
             'name', 'email', 'number', 'company', 'query'
         ]));
 
-        return response()->json($contactQuery);
+        return response()->json($job);
     }
 
     /**
@@ -138,17 +142,17 @@ class ContactQueryController extends Controller
         public function destroy($id)
     {
         // Attempt to find the contact query by its ID
-        $contactQuery = ContactQuery::find($id);
+        $job = Job::find($id);
 
         // Check if the contact query was not found
-        if (!$contactQuery) {
+        if (!$job) {
             // Return a JSON response with a 404 status code if not found
             return response()->json(['success' => false, 'message' => 'Contact query not found'], 404);
         }
 
         // Attempt to delete the contact query
         try {
-            $contactQuery->delete();
+            $job->delete();
             // Return a JSON response indicating success
             return response()->json(['success' => true, 'message' => 'Contact query deleted successfully']);
         } catch (\Exception $e) {
