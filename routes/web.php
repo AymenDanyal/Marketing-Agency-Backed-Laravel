@@ -9,6 +9,25 @@ use App\Http\Controllers\ContactQueryController;
 use App\Http\Controllers\JobQueryController;
 use App\Http\Controllers\BriefQueryController;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Mail;
+
+
+Route::get('/send-test-email', function () {
+    $details = [
+        'subject' => 'Test Email',
+        'body' => 'This is a test email sent from Laravel using SMTP.'
+    ];
+
+    Mail::raw($details['body'], function ($message) use ($details) {
+        $message->to('basit56700@gmail.com')
+                ->subject($details['subject']);
+    });
+
+    return 'Test email has been sent!';
+});
+
+
+
 
 Route::group(['middleware' => 'auth'], function () {
     

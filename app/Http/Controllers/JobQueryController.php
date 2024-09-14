@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Exception;
+use App\Mail\JobApplicationMail;
+use Illuminate\Support\Facades\Mail;
 
 class JobQueryController extends Controller
 {
@@ -48,24 +50,43 @@ class JobQueryController extends Controller
                 'contact' => 'required|string|max:250',
                 'appliedfor' => 'required|string|max:250',
                 'portfolio' => 'required|string|max:250',
-                'cv' => 'required|string|max:250',
+                'cv' => 'required|file|mimes:pdf,doc,docx|max:2048', // cv should be a file, max 2MB, and of certain mime types
             ]);
+            
+            // Handle the CV upload
+            if ($request->hasFile('cv')) {
+                // Save the CV file to the 'public/cv' folder
+                $cvPath = $request->file('cv')->store('cv', 'public');
+    
+                // Add the path to the validated data
+                $validatedData['cv'] = $cvPath;
+            }
 
-            // Create and save the JobQuery entry
+            
+    
+            // Create and save the Job entry with the CV path
             $jobQuery = Job::create($validatedData);
-
-            return response()->json(['message' => 'Job query saved successfully!', 'data' => $jobQuery], 201);
+            Mail::to('hr@artxpro.com')->send(new JobApplicationMail($validatedData));
+            // Return success response
+            return response()->json([
+                'message' => 'Job query saved successfully!',
+                'data' => $jobQuery
+            ], 201);
         } catch (ValidationException $e) {
             // Handle validation errors
-            return response()->json(['message' => 'Validation failed', 'errors' => $e->errors()], 422);
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $e->errors()
+            ], 422);
         } catch (Exception $e) {
             // Log the error for debugging
             Log::error('JobStore Error: ' . $e->getMessage());
-
+    
             // Handle other exceptions
-            return response()->json(['message' => $e], 500);
+            return response()->json(['message' => 'An error occurred', 'error' => $e->getMessage()], 500);
         }
     }
+    
 
 
     /**

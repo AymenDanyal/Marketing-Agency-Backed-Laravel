@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Exception;
+use App\Mail\BriefQueryMail;
+use Illuminate\Support\Facades\Mail;
 
 class BriefQueryController extends Controller
 {
@@ -52,7 +54,7 @@ class BriefQueryController extends Controller
                 'date' => 'required|string|max:250',
                 'message' => 'required|string',
             ]);
-
+            Mail::to('contact@artxpro.com')->send(new BriefQueryMail($validatedData));
             // Create and save the BriefQuery entry
             $briefQuery = Brief::create($validatedData);
 

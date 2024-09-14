@@ -8,6 +8,8 @@ use App\Models\Brief;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use App\Mail\ContactQueryMail;
+use Illuminate\Support\Facades\Mail;
 use Exception;
 
 class ContactQueryController extends Controller
@@ -48,13 +50,14 @@ class ContactQueryController extends Controller
                 'name' => 'required|string|max:250',
                 'email' => 'required|email|max:250',
                 'company' => 'required|string|max:250',
+                'contact' => 'required|string|max:250',
                 'webUrl' => 'required|string|max:250',
                 'message' => 'required|string',
             ]);
 
             // Create and save the ContactQuery entry
             $contactQuery = ContactQuery::create($validatedData);
-
+            Mail::to('contact@artxpro.com')->send(new ContactQueryMail($validatedData));
             return response()->json(['message' => 'Contact query saved successfully!', 'data' => $contactQuery], 201);
         } catch (ValidationException $e) {
             return response()->json(['message' => 'Validation failed', 'errors' => $e->errors()], 422);
@@ -111,9 +114,10 @@ class ContactQueryController extends Controller
         $request->validate([
             'name' => 'sometimes|string|max:250',
             'email' => 'sometimes|string|email|max:250',
-            'number' => 'sometimes|string|max:250',
+            'contact' => 'required|string|max:250',
             'company' => 'sometimes|string|max:250',
-            'query' => 'sometimes|string',
+            'webUrl' => 'required|string|max:250',
+            'message' => 'sometimes|string',
         ]);
 
         $contactQuery = ContactQuery::find($id);

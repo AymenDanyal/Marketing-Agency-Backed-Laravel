@@ -14,6 +14,7 @@ class ContactQuery extends Model
         'id',
         'name',
         'email',
+        'contact',
         'company',
         'webUrl',
         'message',
