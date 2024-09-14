@@ -20,7 +20,7 @@ class BriefQueryController extends Controller
     public function index()
     {
         $queries  = Brief::all(); // Retrieve all contact queries
-        return view('pages.contactQuery.Brief',compact('queries'));
+        return view('pages.contactQuery.brief',compact('queries'));
     }
 
     /**

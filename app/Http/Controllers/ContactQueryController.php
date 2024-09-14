@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactQuery;
-use App\Models\Job;
-use App\Models\Brief;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;

@@ -1,6 +1,6 @@
 <ul class="navbar-nav accordion bgside sidebar sidebar-dark" id="accordionSidebar">
 
-    <a class="d-flex align-items-center justify-content-center sidebar-brand" href="/">
+    <a class="d-flex align-items-center justify-content-center sidebar-brand" href="/artx_backend/public/">
         <div class="sidebar-brand-icon">
             <img class="logo img-fluid d-block auto p-2 p-md-4" src="{{asset('/logo/artxpro.png')}}" alt="Avon Logo">
         </div>
