@@ -16,6 +16,7 @@
                             <th>S.no</th>
                             <th>Title</th>
                             <th>Media Type</th>
+                            <th>Tags</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -28,6 +29,12 @@
                             <td>{{ $sno }}</td>
                             <td>{{ $video->title }}</td>
                             <td>{{ $video->media_type }}</td>
+                            <td>
+                                @foreach($video->tags as $tag)
+                                   <span class="tags"> {{ $tag->name }}</span>
+                                @endforeach
+                            </td>
+                            
                             <td>
                                 <a href="{{ route('videos.edit', $video->id) }}" class="btn btn-success">Edit</a>
                                 <form action="{{ route('videos.destroy', $video->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this video?');">
@@ -51,6 +58,11 @@
 
 @push('style')
 <style>
+    .tags{
+        background-color: #eaecf4;
+        padding: 2px 10px;
+        border-radius: 12px;
+    }
     .add-button {
         width: 150px;
         position: absolute;

@@ -5,6 +5,7 @@
             <img class="logo img-fluid d-block auto p-2 p-md-4" src="{{asset('/logo/artxpro.png')}}" alt="Avon Logo">
         </div>
     </a>
+    
     <hr class="sidebar-divider my-0">
 
     <li class="nav-item">

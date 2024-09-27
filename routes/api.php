@@ -8,22 +8,23 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactQueryController;
 use App\Http\Controllers\JobQueryController;
 use App\Http\Controllers\BriefQueryController;
+use App\Http\Controllers\PageController;
 // API routes
 
 
 Route::prefix('admins')->group(function () {
-    Route::get('/', [AdminController::class, 'index']);     // List all admins
-    Route::post('/', [AdminController::class, 'store']);    // Store a new admin
-    Route::get('{id}', [AdminController::class, 'show']);   // Show a specific admin
-    Route::put('{id}', [AdminController::class, 'update']); // Update a specific admin
-    Route::delete('{id}', [AdminController::class, 'destroy']); // Delete a specific admin
+    Route::get('/', [AdminController::class, 'index']);     
+    Route::post('/', [AdminController::class, 'store']);   
+    Route::get('{id}', [AdminController::class, 'show']);   
+    Route::put('{id}', [AdminController::class, 'update']); 
+    Route::delete('{id}', [AdminController::class, 'destroy']); 
 });
 
 // API routes
 Route::prefix('/blogs')->group(function () {
-    Route::get('/getAllBlogs', [BlogController::class, 'getAllBlogs']);     // List all blogs
+    Route::get('/getAllBlogs', [BlogController::class, 'getAllBlogs']);     
     Route::get('/getBlogBySlug/{slug}', [BlogController::class, 'getBlogBySlug']);
-    Route::post('/', [BlogController::class, 'store']);    // Store a new blog
+    Route::post('/', [BlogController::class, 'store']);    
     Route::get('{id}', [BlogController::class, 'show']);   // Show a specific blog
     Route::put('{id}', [BlogController::class, 'update']); // Update a specific blog
     Route::delete('{id}', [BlogController::class, 'destroy']); // Delete a specific blog
@@ -50,6 +51,15 @@ Route::prefix('/contact-queries')->group(function () {
 Route::post('/job-query', [JobQueryController::class, 'store']);
 Route::post('/brief-query', [BriefQueryController::class, 'store']);
 Route::post('/contact-query', [ContactQueryController::class, 'store']);
+
+
+
+Route::prefix('/pages')->group(function () {
+    Route::get('/{slug}', [PageController::class, 'getVideosByTags']);    // List all contact queries
+    
+});
+
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

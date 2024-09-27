@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Models\Tag;
 use App\Models\PageTag;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -100,4 +101,41 @@ class PageController extends Controller
         $page->delete();
         return redirect()->route('pages.index');
     }
+
+    public function getVideosByTags($slug)
+    {
+        // Find the page by slug
+        $page = Page::where('slug', $slug)->first();
+
+        if (!$page) {
+            return response()->json(['error' => 'Page not found'], 404);
+        }
+
+        // Get the tags applied to the page
+        $tags = $page->tags()->pluck('id');
+
+        if ($tags->isEmpty()) {
+            return response()->json(['message' => 'No tags applied to this page'], 200);
+        }
+
+        // Get the videos that have those tags, ordered by the latest
+        $videos = Video::whereHas('tags', function ($query) use ($tags) {
+            $query->whereIn('tags.id', $tags)
+            
+            ;
+        })
+     // Assuming you have a `created_at` field in the `videos` table
+        ->get();
+
+        return response()->json($videos);
+    }
+
+
+
+
+
+
+
+
+
 }
