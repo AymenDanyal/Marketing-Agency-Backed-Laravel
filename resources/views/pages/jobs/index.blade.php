@@ -2,22 +2,22 @@
 
 @section('content')
 <div class="container-fluid card shadow mb-4">
-    <h1 class="heading">Blogs</h1>
+    <h1 class="heading">Jobs</h1>
 
-    <a href="{{ route('blogs.create') }}" class="btn btn-primary add-button">Add Blog</a>
+    <a href="{{ route('jobs.create') }}" class="btn btn-primary add-button">Add Job</a>
 
     <!-- DataTable -->
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table id="blogsTable" class="table table-bordered">
+                <table id="jobsTable" class="table table-bordered">
                     <thead>
                         <tr>
                             <th>S.no</th>
                             <th>Title</th>
-                            <th>Category</th>
-                            <th>Thumbnail</th>
-                            <th>Created Date</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -25,22 +25,22 @@
                         @php
                             $sno = 1; // Initialize S.no
                         @endphp
-                        @foreach($blogs as $blog)
+                        @foreach($jobs as $job)
                         <tr>
-                            <td>{{ $sno }}</td> 
-                            <td>{{ $blog->title }}</td>
-                            <td>{{ $blog->category ? $blog->category->category : 'No Category' }}</td>
+                            <td>{{ $sno }}</td>
+                            <td>{{ $job->title }}</td>
+                            <td>{{ Str::limit($job->description, 50) }}</td>
                             <td>
-                                @if($blog->thumbnail)
-                                <img src="{{ $blog->thumbnail }}" alt="Thumbnail" width="100">
+                                @if($job->image)
+                                <img src="{{ $job->image }}" alt="Job Image" width="100">
                                 @else
                                 No Image
                                 @endif
                             </td>
-                            <td>{{ $blog->date_created ? $blog->date_created->format('Y-m-d') : 'N/A' }}</td>
+                            <td>{{ $job->status ? 'Active' : 'Inactive' }}</td>
                             <td>
-                                <a href="{{ route('blogs.edit', $blog->id) }}" class="btn btn-success">Edit</a>
-                                <form action="{{ route('blogs.destroy', $blog->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this blog?');">
+                                <a href="{{ route('jobs.edit', $job->id) }}" class="btn btn-success">Edit</a>
+                                <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this job?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
@@ -77,7 +77,7 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        $('#blogsTable').DataTable({
+        $('#jobsTable').DataTable({
             "paging": true,
             "searching": true,
             "info": true

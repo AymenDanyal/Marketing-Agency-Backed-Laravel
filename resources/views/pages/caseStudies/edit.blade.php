@@ -6,9 +6,9 @@
         <div class="col-lg-12">
             <div class="p-5">
                 <div class="text-left">
-                    <h1 class="h4 mb-4 text-gray-900">Edit Blog</h1>
+                    <h1 class="h4 mb-4 text-gray-900">Edit Case Study</h1>
                 </div>
-                <form action="{{ route('blogs.update', ['id' => $blog->id]) }}" method="POST" class="user"
+                <form action="{{ route('case-studies.update', ['id' => $caseStudy->id]) }}" method="POST" class="user"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -22,24 +22,24 @@
                     </div>
                     @endif
 
-                    <input type="hidden" name="id" value="{{ $blog->id }}">
+                    <input type="hidden" name="id" value="{{ $caseStudy->id }}">
 
                     <div class="row form-group">
                         <div class="mb-3 col-sm-6">
-                            <input name="title" class="form-control" placeholder="Blog Title" required
-                                value="{{ $blog->title }}">
+                            <input name="title" class="form-control" placeholder="Case Study Title" required
+                                value="{{ $caseStudy->title }}">
                         </div>
                         <div class="mb-3 col-sm-6">
-                            <input name="slug" class="form-control" placeholder="Blog Slug" required
-                                value="{{ $blog->slug }}">
+                            <input name="slug" class="form-control" placeholder="Case Study Slug" required
+                                value="{{ $caseStudy->slug }}">
                         </div>
                         <div class="mb-3 col-sm-12">
-                            <label for="blog_cat">Please Select Category</label>
-                            <select id="blog_cat" class="form-control" name="cat_id" required>
+                            <label for="case_cat">Please Select Category</label>
+                            <select id="case_cat" class="form-control" name="cat_id" required>
                                 <option value="" disabled>Select Category</option>
                                 @foreach($cats as $cat)
-                                <option value="{{ $cat->id }}" {{ $blog->cat_id == $cat->id ? 'selected' : '' }}>
-                                    {{ $cat->category }}
+                                <option value="{{ $cat->id }}" {{ $caseStudy->cat_id == $cat->id ? 'selected' : '' }}>
+                                    {{ $cat->name }}
                                 </option>
                                 @endforeach
                             </select>
@@ -57,11 +57,11 @@
                                             </a>
                                         </span>
                                         <input id="desktop_banner" class="form-control" type="text"
-                                            name="desktop_banner" value={{ $blog->desktop_banner }}>
+                                            name="desktop_banner" value="{{ $caseStudy->desktop_banner }}">
                                     </div>
                                     <div id="desktop_holder" style="margin-top: 15px;">
-                                        @if($blog->desktop_banner)
-                                        <img class="mt-3" id="desktop_banner_preview" src="{{ $blog->desktop_banner}}"
+                                        @if($caseStudy->desktop_banner)
+                                        <img class="mt-3" id="desktop_banner_preview" src="{{ $caseStudy->desktop_banner }}"
                                             style="width: 100%">
                                         @endif
                                     </div>
@@ -76,11 +76,11 @@
                                                 <i class="fa fa-picture-o"></i> Please Select Mobile Banner
                                             </a>
                                         </span>
-                                        <input id="mob_banner" class="form-control" type="text" name="mob_banner" value={{ $blog->mob_banner}}>
+                                        <input id="mob_banner" class="form-control" type="text" name="mob_banner" value="{{ $caseStudy->mob_banner }}">
                                     </div>
                                     <div id="mob_banner_holder" style="margin-top: 15px;">
-                                        @if($blog->mob_banner)
-                                        <img class="mt-3" id="mob_banner_preview" src="{{ $blog->mob_banner}}"
+                                        @if($caseStudy->mob_banner)
+                                        <img class="mt-3" id="mob_banner_preview" src="{{ $caseStudy->mob_banner }}"
                                             style="width: 100%">
                                         @endif
                                     </div>
@@ -95,35 +95,27 @@
                                                 <i class="fa fa-picture-o"></i> Please Select Thumbnail
                                             </a>
                                         </span>
-                                        <input id="thumbnail" class="form-control" type="text" name="thumbnail" value={{ $blog->thumbnail }}>
+                                        <input id="thumbnail" class="form-control" type="text" name="thumbnail" value="{{ $caseStudy->thumbnail }}">
                                     </div>
-                                    <div id="thumbnail_holder" style="margin-top: 15px; ">
-                                        @if($blog->thumbnail)
-                                        <img class="mt-3" id="thumbnail_preview_img" src="{{ $blog->thumbnail}}"
+                                    <div id="thumbnail_holder" style="margin-top: 15px;">
+                                        @if($caseStudy->thumbnail)
+                                        <img class="mt-3" id="thumbnail_preview_img" src="{{ $caseStudy->thumbnail }}"
                                             style="width: 100%">
                                         @endif
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
-
-
-
-
-
-
                         <div class="mb-3 col-sm-12">
-                            <label for="blog_summary">Blog Summary <small>Please write a short summary of the
-                                    blog</small></label>
-                            <textarea id="blog_summary" class="form-control" name="summary"
-                                required>{{ $blog->summary }}</textarea>
+                            <label for="case_summary">Case Study Summary <small>Please write a short summary of the case study</small></label>
+                            <textarea id="case_summary" class="form-control" name="summary"
+                                required>{{ $caseStudy->summary }}</textarea>
                         </div>
                         <div class="mb-3 col-sm-12">
-                            <label for="blog_content">Blog Content</label>
-                            <textarea id="blog_content" class="form-control" name="content"
-                                required>{{ $blog->content }}</textarea>
+                            <label for="case_content">Case Study Content</label>
+                            <textarea id="case_content" class="form-control" name="content"
+                                required>{{ $caseStudy->content }}</textarea>
                         </div>
                         <div class="mb-3 col-sm-12">
                             <button class="btn btn-block btn-primary" type="submit">Submit</button>
@@ -137,47 +129,16 @@
 @endsection
 
 @push('scripts')
-
 <script type="text/javascript">
     jQuery(document).ready(function($) {
         // Preview file inputs
-
-        var route_prefix = "{{ url('/laravel-filemanager') ";
+        var route_prefix = "{{ url('/laravel-filemanager') }}";
         $('.lfm').filemanager('image', {prefix: route_prefix});
 
-
-        $('input[type="file"]').change(function(e) {
-            const [file] = $(this).prop('files');
-            const id_name = $(this).attr('id') + '_preview';
-
-            if (file) {
-                $('#' + id_name).prop('src', URL.createObjectURL(file));
-            }
-        });
-
-        // Initialize CKEditor for blog content
-        if ($("#blog_content").length > 0) {
-            CKEDITOR.replace('blog_content');
+        // Initialize CKEditor for case study content
+        if ($("#case_content").length > 0) {
+            CKEDITOR.replace('case_content');
         }
-
-        // Generate blog slug from blog name
-        const slugify = str =>
-            str.toLowerCase()
-                .trim()
-                .replace(/[^\w\s-]/g, '')
-                .replace(/[\s_-]+/g, '-')
-                .replace(/^-+|-+$/g, '');
-
-        $('input[name="blog_name"]').keyup(function() {
-            const slugInput = $('input[name="blog_slug"]');
-            if ($(this).val().length > 0) {
-                slugInput.val(slugify($(this).val()));
-                slugInput.removeAttr('disabled');
-            } else {
-                slugInput.val('');
-                slugInput.attr('disabled', 'disabled');
-            }
-        });
     });
 </script>
 @endpush

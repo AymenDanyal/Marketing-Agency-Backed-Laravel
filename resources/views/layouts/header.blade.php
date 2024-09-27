@@ -11,7 +11,7 @@
             </a>
             <div class="shadow animated--grow-in dropdown-menu dropdown-menu-right"
                 aria-labelledby="userDropdown">
-                <form id="logout-form" action="/artx_backend/public/logout" method="POST" >
+                <form id="logout-form" action="{{ url('/logout')}} " method="POST" >
                     @csrf
                     <button type="submit" class="dropdown-item">
                         <i class="fas fa-fw fa-sign-out-alt fa-sm mr-2 text-gray-400"></i> Logout

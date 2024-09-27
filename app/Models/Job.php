@@ -1,27 +1,16 @@
 <?php
+// app/Models/Job.php
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
-    protected $table = 'job_queries'; // Specify the table name if different from the model name
-    protected $primaryKey = 'id'; // Primary key column
-    public $timestamps = false; // Disable timestamps if not using them
+    use HasFactory;
+    public $timestamps = false;
+    protected $table = 'jobs';
 
-    protected $fillable = [
-        'id',
-        'name',
-        'email',
-        'contact',
-        'appliedfor',
-        'portfolio',
-        'cv',
-        'date_created',
-    ];
-
-    protected $casts = [
-        'date_created' => 'datetime',
-    ];
+    protected $fillable = ['title', 'description', 'image', 'status'];
 }

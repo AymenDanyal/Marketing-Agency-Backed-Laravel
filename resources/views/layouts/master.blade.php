@@ -8,9 +8,10 @@
         @include('layouts.sidebar')
 
         <div class="d-flex flex-column" id="content-wrapper">
-
+           
             <div id="content">
                 @include('layouts.header')
+                @stack('style')
                 @yield('content')
             </div>
                 

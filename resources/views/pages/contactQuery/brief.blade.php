@@ -9,7 +9,7 @@
                 <table cellspacing="0" class="table table-bordered" id="contactQueries" width="100%">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Sno</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Contact</th>
