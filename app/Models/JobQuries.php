@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Job extends Model
+class JobQuries extends Model
 {
     protected $table = 'job_queries'; // Specify the table name if different from the model name
     protected $primaryKey = 'id'; // Primary key column

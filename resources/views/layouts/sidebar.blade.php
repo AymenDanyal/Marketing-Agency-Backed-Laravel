@@ -104,6 +104,20 @@
 
     </li>
     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" aria-expanded="true" data-toggle="collapse" aria-controls="collapseTwo"
+            data-target="#testimonials">
+            <i class="fa-solid fa-file-lines"></i><span>Testimonials</span>
+        </a>
+        <div class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" id="testimonials">
+            <div class="bg-white collapse-inner py-2 rounded">
+                <h6 class="collapse-header">Testimonials</h6>
+                <a class="collapse-item" href="{{ route('testimonials.index') }}">Testimonials</a>
+                <a class="collapse-item" href="{{ route('testimonials.create') }}">Add Testimonial</a>
+            </div>
+        </div>
+
+    </li>
+    <li class="nav-item">
         <a class="nav-link collapsed"  href="{{ route('jobs.index') }}">
             <i class="fa-solid fa-briefcase"></i> <span>Jobs</span>
         </a>

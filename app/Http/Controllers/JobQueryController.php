@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Job;
+use App\Models\JobQuries;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
@@ -19,7 +19,7 @@ class JobQueryController extends Controller
      */
     public function index()
     {
-        $queries  = Job::all(); // Retrieve all contact queries
+        $queries  = JobQuries::all(); // Retrieve all contact queries
         return view('pages.contactQuery.job',compact('queries'));
     }
 
@@ -65,7 +65,7 @@ class JobQueryController extends Controller
             
     
             // Create and save the Job entry with the CV path
-            $jobQuery = Job::create($validatedData);
+            $jobQuery = JobQuries::create($validatedData);
             Mail::to('hr@artxpro.com')->send(new JobApplicationMail($validatedData));
             // Return success response
             return response()->json([
@@ -97,7 +97,7 @@ class JobQueryController extends Controller
      */
     public function show($id)
     {
-        $job = Job::find($id);
+        $job = JobQuries::find($id);
 
         if (!$job) {
             return response()->json(['message' => 'Contact query not found'], 404);
@@ -114,7 +114,7 @@ class JobQueryController extends Controller
      */
     public function edit($id)
     {
-        $job = Job::find($id);
+        $job = JobQuries::find($id);
 
         if (!$job) {
             return response()->json(['message' => 'Contact query not found'], 404);
@@ -141,7 +141,7 @@ class JobQueryController extends Controller
             'query' => 'sometimes|string',
         ]);
 
-        $job = Job::find($id);
+        $job = JobQuries::find($id);
 
         if (!$job) {
             return response()->json(['message' => 'Contact query not found'], 404);
@@ -163,7 +163,7 @@ class JobQueryController extends Controller
         public function destroy($id)
     {
         // Attempt to find the contact query by its ID
-        $job = Job::find($id);
+        $job = JobQuries::find($id);
 
         // Check if the contact query was not found
         if (!$job) {

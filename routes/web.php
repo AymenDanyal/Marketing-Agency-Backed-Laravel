@@ -12,6 +12,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CaseCategoryController;
 use App\Http\Controllers\CaseStudyController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\JobController;
@@ -81,6 +82,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('{id}/edit', [PageController::class, 'edit'])->name('pages.edit');
         Route::put('{id}', [PageController::class, 'update'])->name('pages.update');
         Route::delete('{id}', [PageController::class, 'destroy'])->name('pages.destroy');
+    });
+
+    Route::group(['prefix' => 'testimonials'], function () {
+        Route::get('/', [TestimonialController::class, 'index'])->name('testimonials.index');
+        Route::get('create', [TestimonialController::class, 'create'])->name('testimonials.create');
+        Route::post('/', [TestimonialController::class, 'store'])->name('testimonials.store');
+        Route::get('{id}', [TestimonialController::class, 'show'])->name('testimonials.show');
+        Route::get('{id}/edit', [TestimonialController::class, 'edit'])->name('testimonials.edit');
+        Route::put('{id}', [TestimonialController::class, 'update'])->name('testimonials.update');
+        Route::delete('{id}', [TestimonialController::class, 'destroy'])->name('testimonials.destroy');
     });
 
     // Videos Routes

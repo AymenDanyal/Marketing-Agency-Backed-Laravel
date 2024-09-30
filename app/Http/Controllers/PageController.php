@@ -7,6 +7,7 @@ use App\Models\Page;
 use App\Models\Tag;
 use App\Models\PageTag;
 use App\Models\Video;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -117,17 +118,21 @@ class PageController extends Controller
         if ($tags->isEmpty()) {
             return response()->json(['message' => 'No tags applied to this page'], 200);
         }
-
-        // Get the videos that have those tags, ordered by the latest
+        // Fetch Videos and Testimonials based on selected tags
         $videos = Video::whereHas('tags', function ($query) use ($tags) {
-            $query->whereIn('tags.id', $tags)
-            
-            ;
-        })
-     // Assuming you have a `created_at` field in the `videos` table
-        ->get();
+            $query->whereIn('tags.id', $tags);
+        })->latest()->get();  // Fetching the latest videos
 
-        return response()->json($videos);
+        $testimonials = Testimonial::whereHas('tags', function ($query) use ($tags) {
+            $query->whereIn('tags.id', $tags);
+        })->latest()->get();  // Fetching the latest testimonials
+
+        // Combine both data into the response
+        return response()->json([
+            'videos' => $videos,
+            'testimonials' => $testimonials,
+        ]);
+
     }
 
 
