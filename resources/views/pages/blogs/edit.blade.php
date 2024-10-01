@@ -143,7 +143,7 @@
         // Preview file inputs
 
         var route_prefix = "{{ url('/laravel-filemanager')}}";
-        $('.lfm').filemanager( {prefix: route_prefix});
+        $('.lfm').filemanager('file', {prefix: route_prefix});
 
 
         $('input[type="file"]').change(function(e) {

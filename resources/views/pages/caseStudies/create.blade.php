@@ -119,7 +119,7 @@
 <script>
     jQuery(document).ready(function($) {
         var route_prefix = "{{ url('/laravel-filemanager')}}";
-        $('.lfm').filemanager( {prefix: route_prefix});
+        $('.lfm').filemanager('file', {prefix: route_prefix});
 
         if ($("#case_content").length > 0) {
             CKEDITOR.replace('case_content');
