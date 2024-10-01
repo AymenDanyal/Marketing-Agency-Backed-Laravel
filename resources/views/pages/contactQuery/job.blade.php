@@ -31,7 +31,7 @@
                                 <td>{{ $contact->contact }}</td>
                                 <td>{{ $contact->appliedfor }}</td>
                                 <td>
-                                    <a href="{{ .$contact->portfolio }}" target="_blank">
+                                    <a href="{{ $contact->portfolio }}" target="_blank">
                                         View Portfolio
                                     </a>
                                 </td>

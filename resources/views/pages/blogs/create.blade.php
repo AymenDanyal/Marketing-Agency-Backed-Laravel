@@ -128,7 +128,7 @@
 <script>
     jQuery(document).ready(function($) {
 
-        var route_prefix = "{{ url('/laravel-filemanager') }}";
+        var route_prefix = "{{ url('/laravel-filemanager')}}";
         $('.lfm').filemanager('image', {prefix: route_prefix});
 
 
