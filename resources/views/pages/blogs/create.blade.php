@@ -129,7 +129,7 @@
     jQuery(document).ready(function($) {
 
         var route_prefix = "{{ url('/laravel-filemanager')}}";
-        $('.lfm').filemanager('image', {prefix: route_prefix});
+        $('.lfm').filemanager( {prefix: route_prefix});
 
 
         if ($("#blog_content").length > 0) {

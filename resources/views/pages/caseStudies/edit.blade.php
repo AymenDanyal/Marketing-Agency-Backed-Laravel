@@ -133,7 +133,7 @@
     jQuery(document).ready(function($) {
         // Preview file inputs
         var route_prefix = "{{ url('/laravel-filemanager') }}";
-        $('.lfm').filemanager('image', {prefix: route_prefix});
+        $('.lfm').filemanager( {prefix: route_prefix});
 
         // Initialize CKEditor for case study content
         if ($("#case_content").length > 0) {
